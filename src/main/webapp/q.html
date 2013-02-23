@@ -7,12 +7,16 @@
 	</form>
 	<textarea id="out" rows=5 cols=80></textarea>
 	<button type="button" onclick="test()">Send 100#ergebnis</button>
+	<button type="button" onclick="test2()">toString</button>
 	<script src="c.js"></script>
 	<script>
 		var ws, out = document.getElementById("out"), c = connect();
 		var data = "";
 		function test() {
-			ws.send('erg2');
+			ws.send('()xkey select first bkreis,first lgrad, first bgrad, sum ausgaben by kreis from erg2 where date = 2009');
+		}
+		function test2() {
+			out.value = JSON.stringify(data, null, 2);
 		}
 		function connect() {
 			if ("WebSocket" in window) {
