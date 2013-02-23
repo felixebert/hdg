@@ -26,6 +26,7 @@ var hdvmap = {};
 		nrwMap.addOsmLayer();
 	};
 	
+	var circles = [];
 	var drawCircle = function(region, opacity) {
 		var circle = L.circle([region.bgrad, region.lgrad], 3250, {
 			color: '#7D26CD',
@@ -36,6 +37,8 @@ var hdvmap = {};
 		
 		var formattedCosts = region.ausgaben.toFixed(2);
 		circle.bindPopup("<p><strong>" + region.bkreis + "</strong></p><p>" + formattedCosts + " &euro; Kulturausgaben pro Einwohner im Jahr 2009</p>");
+		
+		circles.push(circle);
 	};
 	
 	var maxValue = 0;
@@ -60,8 +63,17 @@ var hdvmap = {};
 		});
 	};
 	
+	var clearCircles = function() {
+		$.each(circles, function(index, circle) {
+			nrwMap.removeLayer(circle);
+		});
+	};
+	
 	hdvmap.init = function(data) {
 		initMap();
+	};
+	hdvmap.refresh = function(data) {
+		clearCircles();
 		calcMaxValue(data);
 		drawCircles(data);
 	};

@@ -31,7 +31,7 @@
 				};
 				ws.onmessage = function(e) {
 					mapData = deserialize(e.data);
-					hdvmap.init(mapData);
+					hdvmap.refresh(mapData);
 				};
 				ws.onerror = function(e) {
 					mapData = e.data;
@@ -39,6 +39,8 @@
 			}
 		}
 		var ws, c = connect(), mapData = "";
+	
+		hdvmap.init(mapData);
 	</script>
 </body>
 </html>
