@@ -19,7 +19,7 @@ var hdvmap = {};
 		var pos = {
 			mlat : 51.259755,
 			mlon : 6.780068,
-			zoom : 9
+			zoom : 10
 		};
 		nrwMap = new Map('leaflet-map');
 		nrwMap.setView([ pos.mlat, pos.mlon ], pos.zoom);
@@ -27,11 +27,15 @@ var hdvmap = {};
 	};
 	
 	var drawCircle = function(region, opacity) {
-		L.circle([region.bgrad, region.lgrad], 3250, {
+		var circle = L.circle([region.bgrad, region.lgrad], 3250, {
 			color: '#7D26CD',
 			fillColor: '#7D26CD',
 			fillOpacity: opacity
-		}).addTo(nrwMap);
+		});
+		circle.addTo(nrwMap);
+		
+		var formattedCosts = region.ausgaben.toFixed(2);
+		circle.bindPopup("<p><strong>" + region.bkreis + "</strong></p><p>" + formattedCosts + " &euro; Kulturausgaben pro Einwohner im Jahr 2009</p>");
 	};
 	
 	var maxValue = 0;

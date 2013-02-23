@@ -11,13 +11,34 @@
 </head>
 <body>
 	<div id="leaflet-map" class="map"></div>
-	
+
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="js/leaflet-src.js"></script>
-	<script type="text/javascript" src="js/mapData.js"></script>
 	<script type="text/javascript" src="js/map.js"></script>
+	<script src="c.js"></script>
 	<script>
-		hdvmap.init(mapData);
+		var q = '()xkey select first bkreis,first lgrad, first bgrad, sum ausgaben by kreis from erg2 where date = 2009';
+		function connect() {
+			if ("WebSocket" in window) {
+				ws = new WebSocket("ws://localhost:8888/");
+				ws.binaryType = "arraybuffer";
+				mapData = "connecting...";
+				ws.onopen = function(e) {
+					ws.send(q);
+				};
+				ws.onclose = function(e) {
+					mapData = "disconnected";
+				};
+				ws.onmessage = function(e) {
+					mapData = deserialize(e.data);
+					hdvmap.init(mapData);
+				};
+				ws.onerror = function(e) {
+					mapData = e.data;
+				};
+			}
+		}
+		var ws, c = connect(), mapData = "";
 	</script>
 </body>
 </html>
