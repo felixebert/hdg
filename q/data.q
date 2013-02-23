@@ -9,6 +9,10 @@ ergebnis:ergebnis,ergebnis1
 
 (::)bilanz:flip `gschluessel`vwf`ndk`sig`tsg`val!("SSSSSS";";")0:`:Bilanzen/bilanz.txt
 
+.z.ws:{neg[.z.w] -8!value x}
+
+/
+
 ergebnis
 
 
