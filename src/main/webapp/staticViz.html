@@ -1,0 +1,82 @@
+<html>
+<body>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="c.js"></script>
+	<script>
+        var ws;
+        var data = "";
+        var out;
+		function connect() {
+			if ("WebSocket" in window) {
+				ws = new WebSocket("ws://localhost:8888/");
+                ws.binaryType = "arraybuffer";
+				ws.onopen = function(e) {
+                    ws.send('tab3');
+				}
+				ws.onclose = function(e) {
+				}
+				ws.onmessage = function(e) {
+                    if(e.data){data = deserialize(e.data);}
+                    viz();
+				}
+				ws.onerror = function(e) {
+				}
+			} else
+				alert("WebSockets not supported on your browser.");
+		}
+
+        connect();
+
+    function viz(){
+        var pdgdata = data; //[[10,45],[20,49],[14,78]];
+        var mapy = {'Duesseldorf': 0, 'Essen': 400, 'Krefeld':100,
+        'Wuppertal':200,
+        'Muenster':300}
+        var mappdg = {'253': 'blue', '252': 'green', '261':'red',
+        '263':'purple',
+        '271':'pink','272':'black','273':'yellow','281':'brown'};
+        var margin = {top: 30, right: 10, bottom: 10, left: 10},
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+        var xoffset = 50;
+        var barheight = 10;
+        var x = d3.scale.linear()
+            .domain(d3.extent(pdgdata))
+                .range([0, width]); 
+        var y = d3.scale.linear().range(["2009","2010"]);
+        var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom);
+
+        svg.selectAll("bar").data(pdgdata).enter().append("rect")
+        .attr("x", xoffset)
+        .attr("y",  function(d){return mapy[d.bkreis];})//function(d,i){return i+i*10;})
+        .attr("width", function(d) { return d.ausgaben;})
+        .attr("height", barheight)
+        .style("fill",function(d){console.log(mappdg.'271');[d.pdg]});
+
+        
+        //svg.selectAll("bar").data(pdgdata).enter().append("rect")
+        //.attr("x", function(d) { return xoffset+d[0];})
+        //.attr("y", function(d,i){return i+i*10;})
+        //.attr("width", function(d) { return d[1];})
+        //.attr("height", barheight)
+        //.style("fill","red");
+        //var xAxis = d3.svg.axis()
+        //    .scale(x)
+        //        .orient("top");
+        //svg.append("g")
+        //    .attr("class", "x axis")
+        //    .call(xAxis);
+
+        //svg.append("g")
+        //    .attr("class", "y axis")
+        //  .append("line")
+        //    .attr("x1", x(0))
+        //    .attr("x2", x(0))
+        //    .attr("y1", 0)
+        //    .attr("y2", height);
+    }; //end viz
+	</script>
+</body>
+</html>
