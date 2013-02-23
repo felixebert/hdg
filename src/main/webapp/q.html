@@ -1,37 +1,49 @@
 <html>
 <body>
-	<title>websocket</title>
+	<title>login</title>
 	<form action="">
-		<input type="button" value="connect" onclick="connect()"> <input type="text" id="x" placeholder="q)">
-		<input type="submit" value="send" onclick="return send()"> <input type="button" value="close" onclick="ws.close()">
+		<input type="text" id="u" value='user'><br> <input type="password" id="p" value='At0mbang.'> <input type="submit"
+			value="login" onclick="return send()">
 	</form>
-	<textarea id="out" rows=25 cols=80></textarea>
+	<textarea id="out" rows=5 cols=80></textarea>
+	<button type="button" onclick="test()">Send 100#ergebnis</button>
+	<script src="c.js"></script>
 	<script>
-		var ws, out = document.getElementById("out");
+		var ws, out = document.getElementById("out"), c = connect();
+		var data = "";
+		function test() {
+			ws.send('10#ergebnis');
+		}
 		function connect() {
 			if ("WebSocket" in window) {
 				ws = new WebSocket("ws://localhost:8888/");
+				ws.binaryType = "arraybuffer";
 				out.value = "connecting...";
 				ws.onopen = function(e) {
 					out.value = "connected";
-				}
+				};
 				ws.onclose = function(e) {
 					out.value = "disconnected";
-				}
+				};
 				ws.onmessage = function(e) {
-					out.value = e.data;
-				}
+					data = deserialize(e.data);
+					out.value = deserialize(e.data);
+				};
 				ws.onerror = function(e) {
 					out.value = e.data;
-				}
+				};
 			} else
 				alert("WebSockets not supported on your browser.");
 		}
 		function send() {
-			x = document.getElementById("x");
-			v = x.value;
-			ws.send(v);
-			out.value = "sent " + v;
+			var d = {
+				u : 0,
+				p : 0
+			};
+			for ( var x in d)
+				d[x] = document.getElementById(x).value;
+			ws.send(s = serialize(d));
+			out.value = "sent " + s;
 			return false;
 		}
 	</script>
