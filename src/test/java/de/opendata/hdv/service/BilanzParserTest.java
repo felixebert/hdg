@@ -6,7 +6,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import de.opendata.hdv.domain.GuvPosition;
+import de.opendata.hdv.domain.BilanzPosition;
 
 public class BilanzParserTest
 {
@@ -14,7 +14,7 @@ public class BilanzParserTest
 	public void testParseGuvPositions()
 	{
 		BilanzParser parser = ParserFactory.createBilanzParser("data/bilanz.txt");
-		Set<GuvPosition> guvPositions = parser.parseGuvPositions();
+		Set<BilanzPosition> guvPositions = parser.parsePositions();
 
 		assertEquals(86618, guvPositions.size());
 	}
@@ -23,10 +23,10 @@ public class BilanzParserTest
 	public void testParseGuvPosition()
 	{
 		BilanzParser parser = ParserFactory.createBilanzParser("data/bilanz.txt");
-		Set<GuvPosition> guvPositions = parser.parseGuvPositions();
-		GuvPosition position1 = guvPositions.iterator().next();
+		Set<BilanzPosition> guvPositions = parser.parsePositions();
+		BilanzPosition position1 = guvPositions.iterator().next();
 
 		System.out.println(position1);
-		assertEquals(1, position1.getVerwaltungsForm().intValue());
+		assertEquals(1, position1.getGemeinde().getVerwaltungsForm().intValue());
 	}
 }

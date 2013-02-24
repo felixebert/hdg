@@ -24,6 +24,11 @@ public class ParserFactory
 		return new CommuneDataParser(getLines(filename));
 	}
 
+	public static ErgebnisParser createErgebnisParser(String filename)
+	{
+		return new ErgebnisParser(getLines(filename));
+	}
+
 	private static List<String[]> getLines(String filename)
 	{
 		CSVReader reader = null;
