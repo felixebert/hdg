@@ -17,7 +17,7 @@ public class ErgebnisPosition
 		this.value = value;
 	}
 
-	public Commune getGemeinde()
+	public Commune getCommune()
 	{
 		return gemeinde;
 	}

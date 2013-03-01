@@ -9,7 +9,8 @@ var hdvmap = {};
 		},
 		addOsmLayer: function() {
 			this.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
-				maxZoom: 18
+				maxZoom: 18,
+				attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}));
 		}
 	});

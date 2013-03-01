@@ -27,6 +27,6 @@ public class ErgebnisParserTest
 		ErgebnisPosition position1 = positions.iterator().next();
 
 		System.out.println(position1);
-		assertEquals(1, position1.getGemeinde().getVerwaltungsForm().intValue());
+		assertEquals(1, position1.getCommune().getVerwaltungsForm().intValue());
 	}
 }
